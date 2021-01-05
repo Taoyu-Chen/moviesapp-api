@@ -1,8 +1,11 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import session from 'express-session';
+import fs from 'fs';
+import path from 'path';
 //import authenticate from './src/authenticate'; remove
 import passport from './src/authenticate';
+import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express'; 
 import options from './src/config/swagger.json';
 import moviesRouter from './src/api/movies';
@@ -41,6 +44,15 @@ app.use(session({
 // initialise passport
 app.use(passport.initialize());
 
+
+// create a write stream (in append mode)
+var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
+// setup the logger
+app.use(morgan('combined', { stream: accessLogStream }))
+
+app.get('/', function (req, res) {
+  res.send('hello, world!');
+});
 app.use(express.static('public'));
 // Add passport.authenticate(..)  to middleware stack for protected routes​
 app.use('/api/movies', passport.authenticate('jwt', {session: false}), moviesRouter);
@@ -55,7 +67,6 @@ if (process.env.SEED_DB) {
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(options));
 
 app.use(errHandler);
-
 
 app.listen(port, () => {
   console.info(`Server running at ${port}`);
