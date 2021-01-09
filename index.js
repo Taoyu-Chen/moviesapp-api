@@ -15,7 +15,7 @@ import genresRouter from './src/api/genres';
 import bodyParser from 'body-parser';
 import usersRouter from './src/api/users';
 import topratedRouter from './src/api/toprated';
-
+import similarRouter from './src/api/similar';
 import './src/db/db.js';
 import {loadUsers, loadMovies} from './src/seedData';
 
@@ -71,6 +71,7 @@ app.use('/api/users', usersRouter);
 app.use('/api/genres', genresRouter);
 app.use('/api/toprated', topratedRouter);
 app.use('/api/keywords', keywordsRouter);
+app.use('/api/similar', similarRouter);
 
 if (process.env.SEED_DB) {
   loadUsers();
