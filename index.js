@@ -10,6 +10,7 @@ import morgan from 'morgan';
 import swaggerUi from 'swagger-ui-express'; 
 import options from './src/config/swagger.json';
 import moviesRouter from './src/api/movies';
+import keywordsRouter from './src/api/keywords';
 import genresRouter from './src/api/genres';
 import bodyParser from 'body-parser';
 import usersRouter from './src/api/users';
@@ -67,6 +68,8 @@ app.use(express.static('public'));
 app.use('/api/movies', passport.authenticate('jwt', {session: false}), moviesRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/genres', genresRouter);
+
+app.use('/api/keywords', keywordsRouter);
 
 if (process.env.SEED_DB) {
   loadUsers();
