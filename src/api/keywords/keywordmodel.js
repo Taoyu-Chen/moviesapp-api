@@ -4,9 +4,8 @@ const Schema = mongoose.Schema;
 
 
 const KeywordSchema = new Schema({
-  adult: { type: Boolean },
   id: { type: Number, required: true, unique: true },
-
+  name: { type: String, required: true}
 });
 
 KeywordSchema.statics.findByKeywordDBId = function (id) {
