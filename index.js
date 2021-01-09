@@ -14,6 +14,7 @@ import keywordsRouter from './src/api/keywords';
 import genresRouter from './src/api/genres';
 import bodyParser from 'body-parser';
 import usersRouter from './src/api/users';
+import topratedRouter from './src/api/toprated';
 
 import './src/db/db.js';
 import {loadUsers, loadMovies} from './src/seedData';
@@ -68,7 +69,7 @@ app.use(express.static('public'));
 app.use('/api/movies', passport.authenticate('jwt', {session: false}), moviesRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/genres', genresRouter);
-
+app.use('/api/toprated', topratedRouter);
 app.use('/api/keywords', keywordsRouter);
 
 if (process.env.SEED_DB) {
