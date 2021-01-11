@@ -6,32 +6,34 @@ import {
 import movieModel from './movieModel';
 const router = express.Router();
 
-// router.get('/', (req, res,next) => {
-//   getMovies().then(movies => res.status(200).send(movies));
-// });
-
 router.get('/', (req, res, next) => {
-  
+  const str = "You should enter movie id to get similar movie";
+  res.status(200).send(str);
 });
 
-// router.get('/:id', (req, res, next) => {
-//   const id = parseInt(req.params.id);
-//   getMovie(id).then(movie => res.status(200).send(movie));
-// });
+router.get('/data', (req, res, next) => {
+  movieModel.find().then(movies => {
+    res.status(200).send(movies);
+  });
+});
 
 router.get('/:id', (req, res, next) => {
   const id = parseInt(req.params.id);
-  getSimilarMovies(id).then(movies => {
-    console.info(`${movies.length}`);
+  getSimilarMovies(id).then(async (movies) => {
     res.status(200).send(movies);
     try {
-      movieModel.deleteMany();
-      movieModel.collection.insertMany(movies);
+      await movieModel.collection.deleteMany();
+      await movieModel.collection.insertMany(movies);
       console.info(`${movies.length} movies were successfully stored.`);
     } catch (err) {
       console.error(`failed to insert movies Data: ${err}`);
     }
   }).catch(next);
+});
+
+router.get('movie/:id', (req, res, next) => {
+  const id = parseInt(req.params.id);
+  movieModel.findByMovieDBId(id).then(movie => res.status(200).send(movie)).catch(next);
 });
 
 router.get('/:id/reviews', (req, res, next) => {
@@ -40,5 +42,9 @@ router.get('/:id/reviews', (req, res, next) => {
   .then(reviews => res.status(200).send(reviews))
   .catch((error) => next(error));
 });
+
+
+
+
 
 export default router;

@@ -11,17 +11,21 @@ router.get('/', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
   const id = parseInt(req.params.id);
-  getMovieKeywords(id).then(keywords => {
+  getMovieKeywords(id).then(async(keywords) => {
     console.info(`${keywords}`);
     res.status(200).send(keywords);
     try {
-      keywordModel.deleteMany();
-      keywordModel.collection.insertMany(keywords);
+      await keywordModel.collection.deleteMany();
+      await keywordModel.collection.insertMany(keywords);
       console.info(`${keywords.length} Keywords were successfully stored.`);
     } catch (err) {
       console.error(`failed to insert keywords Data: ${err}`);
     }
   }).catch(next);
+});
+
+router.get('/data', (req, res, next) => {
+  keywordModel.find().then(keywords => res.status(200).send(keywords)).catch(next);
 });
 
 export default router;
