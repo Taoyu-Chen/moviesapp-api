@@ -6,7 +6,7 @@ import keywordModel from './keywordModel';
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
-  res.status(200).send("You should enter movie id to get movie keywords").catch(next);
+  keywordModel.find().then(keywords => res.status(200).send(keywords)).catch(next);
 });
 
 router.get('/:id', (req, res, next) => {

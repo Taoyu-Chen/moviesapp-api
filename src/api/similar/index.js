@@ -6,7 +6,7 @@ import {
 import movieModel from './movieModel';
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
+router.get('/', (req, res) => {
   const str = "You should enter movie id to get similar movie";
   res.status(200).send(str);
 });
@@ -43,7 +43,31 @@ router.get('/:id/reviews', (req, res, next) => {
   .catch((error) => next(error));
 });
 
-
+// Delete a movie
+router.delete('movie/:id', (req, res) => {
+  movieModel.findOneAndDelete({
+            id: req.params.id
+        })
+        .then(result => {
+            if (result) {
+                return res.status(200).json({
+                    success: true,
+                    message: "Movie deleted"
+                });
+            } else {
+                return res.status(400).json({
+                    success: false,
+                    error: 'Movie not exist'
+                });
+            }
+        })
+        .catch(err => {
+            return res.status(500).json({
+                success: false,
+                error: err.message
+            });
+        });
+});
 
 
 
