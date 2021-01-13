@@ -13,28 +13,27 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
-  "host": "petstore.swagger.io",
-  "basePath": "/v2",
+  "host": "localhost:8080",
   "tags": [
     {
-      "name": "pet",
-      "description": "Everything about your Pets",
-      "externalDocs": {
-        "description": "Find out more",
-        "url": "http://swagger.io"
-      }
+      "name": "movies",
+      "description": "Everything about your Movies"
     },
     {
-      "name": "store",
-      "description": "Access to Petstore orders"
+      "name": "keywords",
+      "description": "Access to movie keywords"
     },
     {
       "name": "user",
-      "description": "Operations about user",
-      "externalDocs": {
-        "description": "Find out more about our store",
-        "url": "http://swagger.io"
-      }
+      "description": "Operations about user"
+    },
+    {
+      "name": "similar movies",
+      "description": "Operations about similar movies"
+    },
+    {
+      "name": "toprated movies",
+      "description": "Operations about toprated movies"
     }
   ],
   "schemes": [
@@ -235,23 +234,23 @@
         "deprecated": true
       }
     },
-    "/pet/{petId}": {
+    "/api/movies/{movieId}": {
       "get": {
         "tags": [
-          "pet"
+          "movies"
         ],
-        "summary": "Find pet by ID",
-        "description": "Returns a single pet",
-        "operationId": "getPetById",
+        "summary": "Find movie by ID",
+        "description": "Returns a single movie",
+        "operationId": "getMovieById",
         "produces": [
           "application/xml",
           "application/json"
         ],
         "parameters": [
           {
-            "name": "petId",
+            "name": "movieId",
             "in": "path",
-            "description": "ID of pet to return",
+            "description": "ID of movie to return",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -259,16 +258,13 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": {
-              "$ref": "#/definitions/Pet"
-            }
+            "description": "successful operation"
           },
           "400": {
             "description": "Invalid ID supplied"
           },
           "404": {
-            "description": "Pet not found"
+            "description": "Movie not found"
           }
         },
         "security": [
@@ -293,7 +289,7 @@
         ],
         "parameters": [
           {
-            "name": "petId",
+            "name": "movieId",
             "in": "path",
             "description": "ID of pet that needs to be updated",
             "required": true,
@@ -348,7 +344,7 @@
             "type": "string"
           },
           {
-            "name": "petId",
+            "name": "movieId",
             "in": "path",
             "description": "Pet id to delete",
             "required": true,
@@ -497,10 +493,10 @@
         }
       }
     },
-    "/store/order/{orderId}": {
+    "/api/movies": {
       "get": {
         "tags": [
-          "store"
+          "movie"
         ],
         "summary": "Find purchase order by ID",
         "description": "For valid response try integer IDs with value >= 1 and <= 10.         Other values will generated exceptions",
@@ -509,18 +505,6 @@
           "application/xml",
           "application/json"
         ],
-        "parameters": [
-          {
-            "name": "orderId",
-            "in": "path",
-            "description": "ID of pet that needs to be fetched",
-            "required": true,
-            "type": "integer",
-            "maximum": 10,
-            "minimum": 1,
-            "format": "int64"
-          }
-        ],
         "responses": {
           "200": {
             "description": "successful operation",
@@ -528,37 +512,6 @@
               "$ref": "#/definitions/Order"
             }
           },
-          "400": {
-            "description": "Invalid ID supplied"
-          },
-          "404": {
-            "description": "Order not found"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "store"
-        ],
-        "summary": "Delete purchase order by ID",
-        "description": "For valid response try integer IDs with positive integer value.         Negative or non-integer values will generate API errors",
-        "operationId": "deleteOrder",
-        "produces": [
-          "application/xml",
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "orderId",
-            "in": "path",
-            "description": "ID of the order that needs to be deleted",
-            "required": true,
-            "type": "integer",
-            "minimum": 1,
-            "format": "int64"
-          }
-        ],
-        "responses": {
           "400": {
             "description": "Invalid ID supplied"
           },

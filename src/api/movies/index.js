@@ -35,11 +35,11 @@ router.delete('/:id', (req, res, next) => {
   movieModel.findOneAndDelete({
             id: req.params.id
         })
-        .then((result, id) => {
+        .then((result) => {
             if (result) {
-              return res.status(200).send({message: `Successfully deleted movie with id: ${id}.`, status: 200});
+              return res.status(200).send({message: `Successfully deleted movie with id: ${req.params.id}.`, status: 200});
             } else {
-                return res.status(404).send({message: `Successfully deleted movie with id: ${id}.`, status: 404});
+              return res.status(404).send({message: `The deleted movie does not exist, the request id: ${req.params.id}.`, status: 404});
             }
         }).catch((err) => next(err));
 });
