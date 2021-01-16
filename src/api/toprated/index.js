@@ -15,6 +15,20 @@ router.get('/', (req, res, next) => {
     .catch((err) => next(err));
 });
 
+//Add new Movie
+router.post('/', async (req, res) => {
+  let newMovie = req.body;
+  if (newMovie && newMovie.original_title) {
+    await movieModel.collection.insertOne(newMovie);
+    res.status(201).send(newMovie);
+  } else {
+    res.status(405).send({
+      message: "Invalid Movie Data",
+      status: 405
+    });
+  }
+});
+
 router.get('/db', (req, res, next) => {
   getTopRatingMovies().then(async (movies) => {
     console.info(`${movies.length}`);
