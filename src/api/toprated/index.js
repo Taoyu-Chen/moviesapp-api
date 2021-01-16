@@ -40,6 +40,24 @@ router.get('/:id', (req, res, next) => {
   }).catch((err) => next(err));
 });
 
+// Update a movie
+router.put('/:id', async (req, res) => {
+  const id = parseInt(req.params.id);
+  const updateTitle = req.body;
+  console.log(req.body);
+  const updateMovieResult = await movieModel.findOneAndUpdate(
+    { id: id }, updateTitle, { new: true }
+  );
+  if (updateMovieResult) {
+    res.status(200).send(updateMovieResult);
+  } else {
+    res.status(404).send({
+      message: 'Unable to find Movie',
+      status: 404
+    });
+  }
+});
+
 router.get('/:id/reviews', (req, res, next) => {
   const id = parseInt(req.params.id);
   getMovieReviews(id)
