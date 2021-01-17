@@ -33,7 +33,7 @@ router.get('/db/:id', (req, res, next) => {
     try {
       await movieModel.deleteMany({});
       await movieModel.collection.insertMany(movies);
-      console.info(`${movies.length} movies were successfully stored.`);
+      console.info(`${movies.length} similar movies were successfully stored.`);
     } catch (err) {
       console.error(`failed to insert movies Data: ${err}`);
     }
@@ -85,13 +85,14 @@ router.delete('/:id', (req, res, next) => {
         })
         .then((result) => {
             if (result) {
-              return res.status(200).send({message: `Successfully deleted movie with id: ${req.params.id}.`, status: 200});
+              return movieModel.find().then(movies => {
+                res.status(200).send(movies);
+                console.log(`similar ${movies.length}`);
+              });
             } else {
               return res.status(404).send({message: `The deleted movie does not exist, the request id: ${req.params.id}.`, status: 404});
             }
         }).catch((err) => next(err));
 });
-
-
 
 export default router;
