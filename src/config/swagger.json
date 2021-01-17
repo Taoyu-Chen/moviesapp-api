@@ -1,16 +1,16 @@
 {
-  "swagger" : "2.0",
-  "info" : {
-    "description" : "This is a sample server Movies app server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `api-key` to test the authorization     filters.",
-    "version" : "1.0.0",
-    "title" : "Movieapp API",
-    "termsOfService" : "http://swagger.io/terms/",
-    "contact" : {
-      "email" : "20091612@mail.wit.ie"
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a sample server Movies app server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `api-key` to test the authorization     filters.",
+    "version": "1.0.0",
+    "title": "Movieapp API",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "20091612@mail.wit.ie"
     },
-    "license" : {
-      "name" : "Apache 2.0",
-      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
   "host": "localhost:8080",
@@ -351,7 +351,7 @@
         "tags": [
           "toprated movies"
         ],
-        "summary": "Deletes a toprated movie",
+        "summary": "Delete a toprated movie",
         "operationId": "deleteTopratedMovie",
         "produces": [
           "application/xml",
@@ -620,6 +620,43 @@
           },
           "404": {
             "description": "Movie not found"
+          }
+        }
+      }
+    },
+    "/api/similar/movie/{movieId}": {
+      "get": {
+        "tags": [
+          "similar movies"
+        ],
+        "summary": "Get a similar movie by id from mongodb",
+        "operationId": "GetASimilarMovie",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "movieId",
+            "in": "path",
+            "description": "ID of movie to return",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Movie"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value"
           }
         }
       }

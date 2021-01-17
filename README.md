@@ -33,11 +33,13 @@ Then access localhost:8080/api/docs/, use apikey then will be  **Authorized.**
 
 ![][Apikey]
 
+Then 
+
 The log file is in the moviesapp-api/log.
 
 ![][Logfile]
 
-If you visit, a log will be generated, try to create a folder first.
+If anyone visit this server, a log will be generated, try to create a folder first.
 
 ## API Configuration
 
@@ -51,8 +53,22 @@ SEED_DB=true
 SECRET=ilikecake
 ```
 
-
 ## API Design
+
+| Name                            | GET                                       | POST                            | PUT                     | DELETE                  |
+| ------------------------------- | ----------------------------------------- | ------------------------------- | ----------------------- | ----------------------- |
+| /api/keywords/:id               | Get and store a moive keywords to mongoDB |                                 |                         |                         |
+| /api/keywords/test/:id          | Get a moive keyword by ID                 |                                 |                         |                         |
+| /api/similar/db/:id             | Store similar movie to mongodb            |                                 |                         |                         |
+| /api/similar/{movieId}          |                                           |                                 | Update a similar movie  | Deletes a similar movie |
+| /api/similar/movie/{movieId}    | Get a similar movie by id from mongodb    |                                 |                         |                         |
+| /api/similar/                   | Get similar movies from mongodb           | Add a similar movie             |                         |                         |
+| /api/toprated                   | Get toprated movies from mongodb          | Add a toprated movie            |                         |                         |
+| /api/toprated/db                | Store toprated movies to mongodb          |                                 |                         |                         |
+| /api/toprated/{movieId}         | Find toprated movie by ID                 |                                 | Update a toprated movie | Delete a toprated movie |
+| /api/toprated/{movieId}/reviews | Find toprated movie review by ID          |                                 |                         |                         |
+| /api/similar/{movieId}/reviews  | /api/similar/{movieId}/reviews            |                                 |                         |                         |
+| /api/users/                     |                                           | Register OR authenticate a user |                         |                         |
 
 https://app.swaggerhub.com/apis/Taoyu-Chen/movieapp20091612/1.0.0
 
@@ -63,7 +79,7 @@ I use using JSON Web Tokens and Passport, and use express-session middleware to 
 
 ## Integrating with React App
 
-Git: https://github.com/Taoyu-Chen/wad2-moviesApp
+The React App repo is shown below: [Github](https://github.com/Taoyu-Chen/wad2-moviesApp).
 
 First I combine firebase in assignment 1 with this time.
 
