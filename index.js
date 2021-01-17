@@ -69,9 +69,9 @@ app.use(express.static('public'));
 app.use('/api/movies', passport.authenticate('jwt', {session: false}), moviesRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/genres', genresRouter);
-app.use('/api/toprated', topratedRouter);
-app.use('/api/keywords', keywordsRouter);
-app.use('/api/similar', similarRouter);
+app.use('/api/toprated', passport.authenticate('jwt', {session: false}), topratedRouter);
+app.use('/api/keywords', passport.authenticate('jwt', {session: false}), keywordsRouter);
+app.use('/api/similar', passport.authenticate('jwt', {session: false}), similarRouter);
 
 if (process.env.SEED_DB) {
   loadUsers();

@@ -11,6 +11,10 @@ const users = [
     'username': 'user2',
     'password': 'test2',
   },
+  {
+    'username': '20091612webdev@wit.ie',
+    'password': 'TAOyu123',
+  }
 ];
 
 // deletes all user documents in collection and inserts test data

@@ -62,10 +62,10 @@ router.get('/:id/reviews', (req, res, next) => {
 // Update a movie
 router.put('/:id', async (req, res) => {
   const id = parseInt(req.params.id);
-  const updateTitle = req.body;
+  const updateContent = req.body;
   console.log(req.body);
   const updateMovieResult = await movieModel.findOneAndUpdate(
-    { id: id }, updateTitle, { new: true }
+    { id: id }, updateContent , { new: true }
   );
   if (updateMovieResult) {
     res.status(200).send(updateMovieResult);
